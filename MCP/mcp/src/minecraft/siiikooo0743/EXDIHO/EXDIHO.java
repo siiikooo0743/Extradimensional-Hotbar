@@ -5,21 +5,28 @@ import org.lwjgl.input.Keyboard;
 
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.Init;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.Mod.PostInit;
-import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.src.ModLoader;
+import net.minecraftforge.common.MinecraftForge;
 
+import siiikooo0743.EXDIHO.*;
 import siiikooo0743.EXDIHO.lib.*;
 import siiikooo0743.EXDIHO.proxy.CommonProxy;
 
@@ -37,129 +44,60 @@ import siiikooo0743.EXDIHO.proxy.CommonProxy;
 @NetworkMod(clientSideRequired=true, serverSideRequired=false)
 public class EXDIHO
 {
-    /**
-     * The Arrays to safe the items.
-     * And the currently selected slot variable.
-     */
-    private static ItemStack[] slot0 = new ItemStack[9];
-    private static int selected0;
-    private static ItemStack[] slot1 = new ItemStack[9];
-    private static int selected1;
-    private static ItemStack[] slot2 = new ItemStack[9];
-    private static int selected2;
-    private static ItemStack[] slot3 = new ItemStack[9];
-    private static int selected3;
-    private static ItemStack[] slot4 = new ItemStack[9];
-    private static int selected4;
-    private static ItemStack[] slot5 = new ItemStack[9];
-    private static int selected5;
-    private static ItemStack[] slot6 = new ItemStack[9];
-    private static int selected6;
-    private static ItemStack[] slot7 = new ItemStack[9];
-    private static int selected7;
-    private static ItemStack[] slot8 = new ItemStack[9];
-    private static int selected8;
-    
-    
+    //Blocks    
+    public final static Block controler = new Controler(Reference.BLOCK_ID, Material.iron).setHardness(4.0F)
+    		.setStepSound(Block.soundMetalFootstep).setUnlocalizedName("controler")
+    		.setCreativeTab(CreativeTabs.tabBlock).func_111022_d("exdiho:controler_top");
     
     // The instance of your mod that Forge uses.
-    @Instance("Generic")
+    @Instance("EXDIHO")
     public static EXDIHO instance;
    
     // Says where the client and server 'proxy' code is loaded.
     @SidedProxy(clientSide = Reference.SERVER_PROXY_CLASS, serverSide = Reference.CLIENT_PROXY_CLASS)
     public static CommonProxy proxy;
     
-    /***
-    * This is code that is executed prior to your mod being initialized into of Minecraft
-    * Examples of code that could be run here;
-    *
-    * Initializing your items/blocks (you must do this here)
-    * Setting up your own custom logger for writing log data to
-    * Loading your language translations for your mod (if your mod has translations for other languages)
-    * Registering your mod's key bindings and sounds
-    *
-    * @param event The Forge ModLoader pre-initialization event
-    */
-    @PreInit
+    
+    
+    @EventHandler
     public void preInit(FMLPreInitializationEvent event) 
     {
+    	
+        //Block
+    	GameRegistry.registerBlock(controler, ItemBlockControler.class, "controler");
+        GameRegistry.registerTileEntity(TileEntityControler.class, "tileControler");
+        MinecraftForge.setBlockHarvestLevel(controler, "pickaxe", 1);
         
-    }
-    
-    /***
-    *    This is code that is executed when your mod is being initialized in Minecraft
-    * Examples of code that could be run here;
-    *
-    * Registering your GUI Handler
-    * Registering your different event listeners
-    * Registering your different tile entities
-    * Adding in any recipes you have
-    *
-    * @param event The Forge ModLoader initialization event
-    */
-    @Init
-    public void init(FMLInitializationEvent event) 
-    {
-        KeyBinding[] key = {new KeyBinding("EXDIHO", Keyboard.KEY_G)};
+        //KeyBindings
+    	KeyBinding[] key = {new KeyBinding(Reference.MOD_ID, Keyboard.KEY_G)};
         boolean[] repeat = {false};
         KeyBindingRegistry.registerKeyBinding(new KeyBindings(key, repeat));
+       
+        //Language
+        
+        LanguageRegistry.addName(controler, "Controler");
+        
+        for (int ix = 0; ix < 16; ix++) {
+			ItemStack multiBlockStack = new ItemStack(controler, 1, ix);
+			
+			LanguageRegistry.addName(multiBlockStack, "Controler");
+		}
     }
     
-    /***
-    * This is code that is executed after all mods are initialized in Minecraft
-    * This is a good place to execute code that interacts with other mods (ie, loads an addon module
-    * of your mod if you find a particular mod).
-    *
-    * @param event The Forge ModLoader post-initialization event
-    */
-    @PostInit
+    @EventHandler
+    public void init(FMLInitializationEvent event) 
+    {
+        //Handlers
+    	NetworkRegistry.instance().registerGuiHandler(this, new GuiHandler());
+
+    }
+    
+    @EventHandler
     public void postInit(FMLPostInitializationEvent event) 
     {
-        
-    }
-    
-    public static void ChangeItem(EntityPlayer player, int slot, int newSelected)
-    {
-        switch(slot)
-        {   
-            case 0:
-                player.inventory.mainInventory[slot] = slot0[newSelected];
-                
-            break;
-            case 1:
-                player.inventory.mainInventory[slot] = slot1[newSelected];
-                
-            break;
-            case 2:
-                player.inventory.mainInventory[slot] = slot2[newSelected];
-                
-            break;
-            case 3:
-                player.inventory.mainInventory[slot] = slot3[newSelected];
-                
-            break;
-            case 4:
-                player.inventory.mainInventory[slot] = slot4[newSelected];
-                
-            break;
-            case 5:
-                player.inventory.mainInventory[slot] = slot5[newSelected];
-                
-            break;
-            case 6:
-                player.inventory.mainInventory[slot] = slot6[newSelected];
-                
-            break;
-            case 7:
-                player.inventory.mainInventory[slot] = slot7[newSelected];
-                
-            break;
-            case 8:
-                player.inventory.mainInventory[slot] = slot8[newSelected];
-                
-            
-        }
+    	//Recipe
+    	GameRegistry.addRecipe(new ItemStack(controler, 1, 2), "xxx", "xxx", "xxx",'x',Block.dirt);
+    	
     }
     
 }

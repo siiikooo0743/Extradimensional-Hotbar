@@ -23,4 +23,10 @@ public class Reference
      */
     public static final String SERVER_PROXY_CLASS = "siiikooo0743.EXDIHO.proxy.CommonProxy";
     public static final String CLIENT_PROXY_CLASS = "siiikooo0743.EXDIHO.proxy.ClientProxy";
+    
+    /**
+     * Some IDs
+     */
+    public static final int GUI_ID = 25;
+    public static final int BLOCK_ID = 2451;
 }

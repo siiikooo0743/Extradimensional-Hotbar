@@ -1,10 +1,12 @@
 package siiikooo0743.EXDIHO;
 
+import siiikooo0743.EXDIHO.KeyBindings;
 import java.util.EnumSet;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
+
 public class PlayerTickHandler implements ITickHandler
 {
 private final EnumSet<TickType> ticksToGet;
@@ -41,7 +43,7 @@ public String getLabel()
 
 public static void playerTick(EntityPlayer player)
 {
-         if(KeyBindings.keyPressed)
+         if(KeyBindings.KeyPressed)
          {
                 
          }
