@@ -26,7 +26,7 @@ public class TileEntityControler extends TileEntity implements IInventory
 	
 	public TileEntityControler(World par1World)
 	{
-		this.setWorldObj(par1World);
+		//this.setWorldObj(par1World);
 		size = this.getBlockMetadata() * 9;
 		content = new ItemStack[size];
 		Minecraft.getMinecraft().theWorld.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
@@ -35,21 +35,6 @@ public class TileEntityControler extends TileEntity implements IInventory
 	public TileEntityControler()
 	{
 
-	}
-	
-	@Override
-	public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt)
-	{
-		NBTTagCompound tag = pkt.customParam1;
-		this.readFromNBT(tag);
-	}
-
-	@Override
-	public Packet getDescriptionPacket()
-	{
-		NBTTagCompound tag = new NBTTagCompound();
-		this.writeToNBT(tag);
-		return new Packet132TileEntityData(xCoord, yCoord, zCoord, 0, tag);
 	}
 	
 	@Override

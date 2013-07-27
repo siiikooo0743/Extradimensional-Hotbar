@@ -1,0 +1,85 @@
+---- Minecraft Crash Report ----
+// I blame Dinnerbone.
+
+Time: 27.07.13 11:00
+Description: Ticking memory connection
+
+java.lang.NullPointerException
+	at net.minecraft.tileentity.TileEntity.getBlockMetadata(TileEntity.java:177)
+	at siiikooo0743.EXDIHO.TileEntityControler.<init>(TileEntityControler.java:30)
+	at siiikooo0743.EXDIHO.Controler.createNewTileEntity(Controler.java:78)
+	at net.minecraft.block.Block.createTileEntity(Block.java:1779)
+	at net.minecraft.world.chunk.Chunk.getChunkBlockTileEntity(Chunk.java:987)
+	at net.minecraft.world.chunk.Chunk.setBlockIDWithMetadata(Chunk.java:759)
+	at net.minecraft.world.World.setBlock(World.java:557)
+	at siiikooo0743.EXDIHO.ItemBlockControler.placeBlockAt(ItemBlockControler.java:39)
+	at net.minecraft.item.ItemBlock.onItemUse(ItemBlock.java:119)
+	at net.minecraft.item.ItemStack.tryPlaceItemIntoWorld(ItemStack.java:152)
+	at net.minecraft.item.ItemInWorldManager.activateBlockOrUseItem(ItemInWorldManager.java:429)
+	at net.minecraft.network.NetServerHandler.handlePlace(NetServerHandler.java:554)
+	at net.minecraft.network.packet.Packet15Place.processPacket(Packet15Place.java:79)
+	at net.minecraft.network.MemoryConnection.processReadPackets(MemoryConnection.java:89)
+	at net.minecraft.network.NetServerHandler.networkTick(NetServerHandler.java:141)
+	at net.minecraft.network.NetworkListenThread.networkTick(NetworkListenThread.java:54)
+	at net.minecraft.server.integrated.IntegratedServerListenThread.networkTick(IntegratedServerListenThread.java:109)
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:689)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:585)
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:129)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:482)
+	at net.minecraft.server.ThreadMinecraftServer.run(ThreadMinecraftServer.java:16)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at net.minecraft.tileentity.TileEntity.getBlockMetadata(TileEntity.java:177)
+	at siiikooo0743.EXDIHO.TileEntityControler.<init>(TileEntityControler.java:30)
+	at siiikooo0743.EXDIHO.Controler.createNewTileEntity(Controler.java:78)
+	at net.minecraft.block.Block.createTileEntity(Block.java:1779)
+	at net.minecraft.world.chunk.Chunk.getChunkBlockTileEntity(Chunk.java:987)
+	at net.minecraft.world.chunk.Chunk.setBlockIDWithMetadata(Chunk.java:759)
+	at net.minecraft.world.World.setBlock(World.java:557)
+	at siiikooo0743.EXDIHO.ItemBlockControler.placeBlockAt(ItemBlockControler.java:39)
+	at net.minecraft.item.ItemBlock.onItemUse(ItemBlock.java:119)
+	at net.minecraft.item.ItemStack.tryPlaceItemIntoWorld(ItemStack.java:152)
+	at net.minecraft.item.ItemInWorldManager.activateBlockOrUseItem(ItemInWorldManager.java:429)
+	at net.minecraft.network.NetServerHandler.handlePlace(NetServerHandler.java:554)
+	at net.minecraft.network.packet.Packet15Place.processPacket(Packet15Place.java:79)
+	at net.minecraft.network.MemoryConnection.processReadPackets(MemoryConnection.java:89)
+	at net.minecraft.network.NetServerHandler.networkTick(NetServerHandler.java:141)
+
+-- Ticking connection --
+Details:
+	Connection: net.minecraft.network.NetServerHandler@30b4bd5
+Stacktrace:
+	at net.minecraft.network.NetworkListenThread.networkTick(NetworkListenThread.java:54)
+	at net.minecraft.server.integrated.IntegratedServerListenThread.networkTick(IntegratedServerListenThread.java:109)
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:689)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:585)
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:129)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:482)
+	at net.minecraft.server.ThreadMinecraftServer.run(ThreadMinecraftServer.java:16)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.6.2
+	Operating System: Linux (amd64) version 3.8.0-26-generic
+	Java Version: 1.7.0_21, Oracle Corporation
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 822092360 bytes (784 MB) / 1038876672 bytes (990 MB) up to 1038876672 bytes (990 MB)
+	JVM Flags: 3 total; -Xincgc -Xmx1024M -Xms1024M
+	AABB Pool Size: 4931 (276136 bytes; 0 MB) allocated, 4671 (261576 bytes; 0 MB) used
+	Suspicious classes: FML and Forge are installed
+	IntCache: cache: 0, tcache: 0, allocated: 1, tallocated: 63
+	FML: MCP v8.04 FML v6.2.19.789 Minecraft Forge 9.10.0.789 4 mods loaded, 4 mods active
+	mcp{8.04} [Minecraft Coder Pack] (minecraft.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	FML{6.2.19.789} [Forge Mod Loader] (coremods) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	Forge{9.10.0.789} [Minecraft Forge] (coremods) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	EXDIHO{0.0.0.1} [Extradimensional-Hotbar] (bin) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	Profiler Position: N/A (disabled)
+	Vec3 Pool Size: 1424 (79744 bytes; 0 MB) allocated, 1344 (75264 bytes; 0 MB) used
+	Player Count: 1 / 8; [EntityPlayerMP['Player703'/299, l='Test', x=-231,71, y=79,61, z=226,54]]
+	Type: Integrated Server (map_client.txt)
+	Is Modded: Definitely; Client brand changed to 'fml,forge'
