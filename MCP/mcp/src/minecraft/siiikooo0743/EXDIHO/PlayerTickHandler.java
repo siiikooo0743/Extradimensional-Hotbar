@@ -45,7 +45,8 @@ public static void playerTick(EntityPlayer player)
 {
          if(KeyBindings.KeyPressed)
          {
-                
+                 // The last 4 params are where your TileEntity is.
+                player.openGui(mod, modGuiId, world, x, y, z);
          }
 }
 }
