@@ -1,5 +1,8 @@
 package siiikooo0743.EXDIHO.proxy;
 
+import cpw.mods.fml.common.registry.TickRegistry;
+import cpw.mods.fml.relauncher.Side;
+
 public class CommonProxy
 {
     

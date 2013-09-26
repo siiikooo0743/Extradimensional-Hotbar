@@ -9,8 +9,9 @@ import cpw.mods.fml.common.TickType;
 
 public class KeyBindings extends KeyHandler
 {
-    private EnumSet tickTypes = EnumSet.of(TickType.CLIENT);
-    public static boolean KeyPressed;
+    private EnumSet tickTypes = EnumSet.of(TickType.PLAYER);
+    public static boolean KeyDown;
+    public static boolean KeyChanged;
     
     public KeyBindings(KeyBinding[] keyBindings, boolean[] repeatings)
     {
@@ -24,12 +25,14 @@ public class KeyBindings extends KeyHandler
     @Override
     public void keyDown(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd, boolean isRepeat)
     {
-        KeyPressed = true;
+        KeyDown = true;
+        KeyChanged = true;
     }
     @Override
     public void keyUp(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd)
     {
-    	KeyPressed = false;
+    	KeyDown = false;
+    	KeyChanged = true;
     }
     @Override
     public EnumSet<TickType> ticks()

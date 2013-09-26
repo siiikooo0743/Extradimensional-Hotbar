@@ -27,6 +27,17 @@ public class Reference
     /**
      * Some IDs
      */
-    public static final int GUI_ID = 25;
     public static final int BLOCK_ID = 2451;
+    
+    /**
+     * BlockNames
+     */
+    public static final String[] controlerSubNames = {"CPU", "Casing", "Player Inventory Injector", "Mouse Key IO", "Antenna Socket", "Antenna", "EXDIHO wallTexture", "EXDIHO unused", "EXDIHO unused", "EXDIHO unused", "EXDIHO unused", "EXDIHO unused", "EXDIHO unused", "EXDIHO unused", "EXDIHO unused", "EXDIHO filling"};
+    
+    /**
+     * Mod specific constants
+     */
+    
+    public static final int ANTENNA_REACH = 40;
+    public static final String PLAYER_TAG_NAME = "EXDIHO_KPD_POS";
 }

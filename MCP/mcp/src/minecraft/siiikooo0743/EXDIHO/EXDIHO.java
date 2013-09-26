@@ -1,7 +1,10 @@
 package siiikooo0743.EXDIHO;
 
 
+import java.util.EnumSet;
+
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.common.Mod;
@@ -15,15 +18,21 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import cpw.mods.fml.common.registry.TickRegistry;
+import cpw.mods.fml.common.TickType;
+import cpw.mods.fml.relauncher.Side;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.ModLoader;
+import net.minecraft.tileentity.TileEntityChest;
 import net.minecraftforge.common.MinecraftForge;
 
 import siiikooo0743.EXDIHO.*;
@@ -45,11 +54,10 @@ import siiikooo0743.EXDIHO.proxy.CommonProxy;
 public class EXDIHO
 {
     //Blocks    
-    public final static Block controler = new Controler(Reference.BLOCK_ID, Material.iron).setHardness(4.0F)
-    		.setStepSound(Block.soundMetalFootstep).setUnlocalizedName("controler")
-    		.setCreativeTab(CreativeTabs.tabBlock).func_111022_d("exdiho:controler_top");
+	public static final Block controler = new BlockControler(Reference.BLOCK_ID);
     
-    // The instance of your mod that Forge uses.
+	
+	// The instance of your mod that Forge uses.
     @Instance("EXDIHO")
     public static EXDIHO instance;
    
@@ -62,41 +70,37 @@ public class EXDIHO
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) 
     {
-    	
-        //Block
-    	GameRegistry.registerBlock(controler, ItemBlockControler.class, "controler");
-        GameRegistry.registerTileEntity(TileEntityControler.class, "tileControler");
-        MinecraftForge.setBlockHarvestLevel(controler, "pickaxe", 1);
-        
-        //KeyBindings
-    	KeyBinding[] key = {new KeyBinding(Reference.MOD_ID, Keyboard.KEY_G)};
-        boolean[] repeat = {false};
-        KeyBindingRegistry.registerKeyBinding(new KeyBindings(key, repeat));
-       
-        //Language
-        
-        LanguageRegistry.addName(controler, "Controler");
-        
-        for (int ix = 0; ix < 16; ix++) {
-			ItemStack multiBlockStack = new ItemStack(controler, 1, ix);
-			
-			LanguageRegistry.addName(multiBlockStack, "Controler");
-		}
+
     }
     
     @EventHandler
     public void init(FMLInitializationEvent event) 
     {
-        //Handlers
-    	NetworkRegistry.instance().registerGuiHandler(this, new GuiHandler());
-
+    	//Block
+    	GameRegistry.registerBlock(controler, ControlerItemBlock.class, "controler");
+    	GameRegistry.registerTileEntity(TileEntityControler.class, "controler");
+    	
+        //KeyBindings
+    	KeyBinding[] key = {new KeyBinding(Reference.MOD_ID, Keyboard.KEY_G)};
+        boolean[] repeat = {false};
+        KeyBindingRegistry.registerKeyBinding(new KeyBindings(key, repeat));
+        TickRegistry.registerTickHandler(new PlayerTickHandler(EnumSet.of(TickType.PLAYER)), Side.CLIENT);
+        //Language
+        
+        for (int ix = 0; ix < 16; ix++) 
+        {
+        	ItemStack Stack = new ItemStack(controler, 1, ix);
+        	
+        	LanguageRegistry.addName(Stack, Reference.controlerSubNames[Stack.getItemDamage()]);
+        }
+        
     }
     
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) 
     {
     	//Recipe
-    	GameRegistry.addRecipe(new ItemStack(controler, 1, 2), "xxx", "xxx", "xxx",'x',Block.dirt);
+    	
     	
     }
     
